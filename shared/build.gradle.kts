@@ -18,7 +18,6 @@ kotlin {
                 api("dev.redukt:redukt-core:1.0")
                 api("dev.redukt:redukt-thunk:1.0")
                 implementation("dev.redukt:redukt-data-source:1.0")
-                implementation("dev.redukt:redukt-insight:1.0")
                 implementation("dev.redukt:redukt-koin:1.0")
                 implementation("io.github.aakira:napier:2.6.1")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")

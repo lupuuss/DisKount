@@ -1,17 +1,16 @@
 package com.github.lupuuss.diskount.slices
 
-import dev.redukt.core.Action
-import dev.redukt.core.Reducer
-import dev.redukt.core.coroutines.joinDispatchJob
-import dev.redukt.core.store.Selector
-import dev.redukt.data.DataSourceCall
-import dev.redukt.data.createDataSourceReducer
-import dev.redukt.thunk.CoThunk
 import com.github.lupuuss.diskount.*
 import com.github.lupuuss.diskount.domain.Deal
 import com.github.lupuuss.diskount.paging.PageRequest
+import dev.redukt.core.Action
+import dev.redukt.core.Reducer
+import dev.redukt.core.coroutines.joinDispatchJob
 import dev.redukt.core.store.SelectorEquality
 import dev.redukt.core.store.createSelector
+import dev.redukt.data.DataSourceCall
+import dev.redukt.data.createDataSourceReducer
+import dev.redukt.thunk.CoThunk
 
 val AppState.deals: ListLoadState<PageRequest<Unit>, Deal>
     get() = listLoadState(
@@ -40,6 +39,10 @@ sealed interface DealAction : Action {
         }
         joinDispatchJob(DataSourceCall(DataSources.AllDeals, newRequest))
     })
+
+    companion object {
+        fun GoToDetails(id: Deal.Id) = NavigationAction.Push(Destination(DestinationType.DealDetails(id)))
+    }
 }
 
 internal val dealsIdsReducer: Reducer<ListLoadState<PageRequest<Unit>, Deal.Id>> =
