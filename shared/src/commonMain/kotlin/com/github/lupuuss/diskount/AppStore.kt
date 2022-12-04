@@ -12,6 +12,7 @@ import dev.redukt.core.store.buildStore
 import dev.redukt.data.dataSourceMiddleware
 import dev.redukt.koin.KoinApplicationDI
 import dev.redukt.thunk.thunkMiddleware
+import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +22,7 @@ import org.koin.core.KoinApplication
 data class AppState(
     val entities: Entities = Entities(),
     val dealIds: ListLoadState<PageRequest<Unit>, Deal.Id> = listLoadState(),
-    val navigation: List<Destination> =  listOf(Destination(DestinationType.AllDeals)),
+    val navigation: List<Destination> =  listOf(Destination(DestinationType.Splash)),
 )
 
 data class Entities(
@@ -41,7 +42,8 @@ internal fun appReducer(state: AppState, action: Action) = AppState(
 internal fun createStore(koinApp: KoinApplication) = buildStore {
     AppState() reducedBy ::appReducer
     middlewares {
-        +translucentMiddleware<AppState> { Napier.v(message = it.toString()) }
+        Napier.base(DebugAntilog())
+        +translucentMiddleware<AppState> { Napier.v(tag = "DisKount", message = it.toString()) }
         +initMiddleware
         +thunkMiddleware
         +dataSourceMiddleware

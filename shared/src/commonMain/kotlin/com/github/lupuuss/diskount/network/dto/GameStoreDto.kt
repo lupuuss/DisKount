@@ -20,7 +20,9 @@ internal data class GameStoreImagesDto(
 internal fun GameStoreDto.toDomain() = GameStore(
     id = GameStore.Id(storeID),
     name = storeName,
-    logoImageUrl = images.logo,
-    iconImageUrl = images.icon,
-    bannerImageUrl = images.banner,
+    logoImageUrl = images.logo.toCheapSharkUrl(),
+    iconImageUrl = images.icon.toCheapSharkUrl(),
+    bannerImageUrl = images.banner.toCheapSharkUrl(),
 )
+
+private fun String.toCheapSharkUrl() = "https://www.cheapshark.com$this"

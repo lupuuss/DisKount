@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -17,12 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.github.lupuuss.diskount.domain.Deal
 import com.github.lupuuss.diskount.slices.DealAction
+import com.github.lupuuss.diskount.slices.DealItem
 import com.github.lupuuss.diskount.slices.DealsSelector
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -38,56 +37,86 @@ fun DealsScreen() {
             .filter { it > deals.data.size - 2 }
             .collect { dispatch(DealAction.LoadMore) }
     }
-    LazyColumn(state = listState, contentPadding = PaddingValues(16.dp)) {
+    LazyColumn(
+        state = listState,
+        contentPadding = PaddingValues(16.dp),
+    ) {
         itemsIndexed(deals.data) { index, deal ->
-            DealItem(deal) { dispatch(DealAction.GoToDetails(deal.id)) }
+            DealItemUi(deal) { dispatch(DealAction.GoToDetails(deal.id)) }
             if (index != deals.data.lastIndex) Spacer(Modifier.height(8.dp))
         }
-        if (deals.isLoading) item { CircularProgressIndicator() }
+        if (deals.isLoading) item {
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(), horizontalArrangement = Arrangement.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DealItem(deal: Deal, onClick: () -> Unit) {
+fun DealItemUi(deal: DealItem, onClick: () -> Unit) {
     Card(modifier = Modifier.fillMaxWidth(), onClick = onClick) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+        Row(Modifier.height(IntrinsicSize.Max)) {
             Column(
                 modifier = Modifier
-                    .weight(1f)
                     .padding(8.dp)
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = deal.title, fontSize = 16.sp)
-                Row(
-                    modifier = Modifier
-                        .padding(4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = deal.title,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(Modifier.height(8.dp))
+                Column(
+                    modifier = Modifier.fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = "${deal.normalPrice}$",
-                            textDecoration = TextDecoration.LineThrough,
-                            color = Color.Gray,
-                            fontSize = 20.sp,
-                        )
-                        Text(text = "${deal.salePrice}$", fontSize = 20.sp)
-                    }
-                    Spacer(Modifier.width(8.dp))
-                    Text(fontSize = 26.sp, text = "${deal.discountPercentage}%", color = Color.Green)
+                    Text(
+                        text = "${deal.normalPrice}$",
+                        fontSize = 20.sp,
+                        textDecoration = TextDecoration.LineThrough,
+                        color = Color.Gray
+                    )
+                    Text(text = "${deal.salePrice}$", fontSize = 20.sp, softWrap = false)
+                    Text(text = "${deal.discountPercentage}%", fontSize = 24.sp, color = Color.Green)
                 }
             }
-            Spacer(Modifier.width(8.dp))
-            AsyncImage(
+            Box(
                 modifier = Modifier
-                    .background(Color.Black)
-                    .height(200.dp)
-                    .width(160.dp),
-                model = deal.thumbUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                alignment = Alignment.Center
-            )
+                    .fillMaxHeight()
+                    .background(Color.Black),
+            ) {
+                AsyncImage(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .height(200.dp)
+                        .width(160.dp),
+                    model = deal.thumbUrl,
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    alignment = Alignment.Center,
+                )
+                AsyncImage(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .size(64.dp)
+                        .padding(8.dp),
+                    model = deal.gameStore.logoImageUrl,
+                    contentDescription = null
+                )
+            }
+
         }
     }
 }
