@@ -19,7 +19,7 @@ internal val initMiddleware = translucentMiddleware<AppState> { action ->
         runCatching { callDataSource(DataSources.GameStores, Unit) }
             .onSuccess {
                 dispatch(DataSourceAction(DataSources.GameStores, DataSourcePayload.Success(Unit, it)))
-                dispatch(NavigationAction.Push(Destination(DestinationType.AllDeals)))
+                dispatch(NavigationAction.Set(listOf(Destination(DestinationType.AllDeals))))
             }.onFailure {
                 dispatch(NavigationAction.Set(listOf(Destination(DestinationType.SplashError))))
             }

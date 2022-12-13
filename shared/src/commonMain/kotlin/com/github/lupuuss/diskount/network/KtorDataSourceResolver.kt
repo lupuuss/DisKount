@@ -1,11 +1,11 @@
 package com.github.lupuuss.diskount.network
 
-import dev.redukt.data.DataSource
-import dev.redukt.data.TypeSafeDataSourceResolver
 import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.network.dto.DealDto
 import com.github.lupuuss.diskount.network.dto.GameStoreDto
 import com.github.lupuuss.diskount.network.dto.toDomain
+import dev.redukt.data.DataSource
+import dev.redukt.data.resolver.DataSourceResolver
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -14,7 +14,7 @@ import io.ktor.http.*
 
 internal fun ktorDataSourceResolver(
     client: HttpClient
-) = TypeSafeDataSourceResolver {
+) = DataSourceResolver {
     DataSources.AllDeals resolveBy {
         client.dataSource(
             requestBuilder = {

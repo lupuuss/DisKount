@@ -9,11 +9,12 @@ data class Deal(
     val salePrice: Double,
     val normalPrice: Double,
     val thumbUrl: String,
-    val metacriticScore: Int,
+    val metacriticScore: Int?,
+    val steamRatingPercent: Int?,
     val gameStoreId: GameStore.Id,
 ) {
 
-    val discountPercentage get() = ((normalPrice - salePrice) / normalPrice).roundToInt()
+    val discountPercentage get() = (((normalPrice - salePrice) / normalPrice) * 100.0).roundToInt()
 
     @JvmInline
     value class Id(val value: String)

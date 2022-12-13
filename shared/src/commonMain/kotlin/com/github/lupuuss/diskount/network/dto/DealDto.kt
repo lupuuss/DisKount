@@ -12,6 +12,7 @@ internal data class DealDto(
     val normalPrice: String,
     val thumb: String,
     val metacriticScore: String,
+    val steamRatingPercent: String,
     val storeID: String,
 )
 
@@ -21,6 +22,7 @@ internal fun DealDto.toDomain() = Deal(
     salePrice = salePrice.toDouble(),
     normalPrice = normalPrice.toDouble(),
     thumbUrl = thumb,
-    metacriticScore = metacriticScore.toInt(),
+    metacriticScore = metacriticScore.toInt().takeIf { it != 0 },
+    steamRatingPercent = steamRatingPercent.toInt().takeIf { it != 0 },
     gameStoreId = GameStore.Id(storeID)
 )

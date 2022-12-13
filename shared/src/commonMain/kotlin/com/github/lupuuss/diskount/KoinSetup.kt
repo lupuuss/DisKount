@@ -19,7 +19,7 @@ fun initKoinApp() = koinApplication {
 
 private fun KoinApplication.mainModule() = module {
     single { createStore(koinApp = this@mainModule) }
-    single(createdAtStart = true) {
+    single {
         HttpClient {
             expectSuccess = true
             install(DefaultRequest) {

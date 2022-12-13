@@ -2,53 +2,19 @@ package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.*
 import com.github.lupuuss.diskount.domain.Deal
-import com.github.lupuuss.diskount.domain.GameStore
 import com.github.lupuuss.diskount.paging.PageRequest
 import dev.redukt.core.Action
 import dev.redukt.core.Reducer
 import dev.redukt.core.coroutines.joinDispatchJob
-import dev.redukt.core.store.SelectorEquality
-import dev.redukt.core.store.createSelector
 import dev.redukt.data.DataSourceCall
 import dev.redukt.data.createDataSourceReducer
 import dev.redukt.thunk.CoThunk
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 
-data class DealItem(
-    val id: Deal.Id,
-    val title: String,
-    val salePrice: Double,
-    val normalPrice: Double,
-    val discountPercentage: Int,
-    val thumbUrl: String,
-    val metacriticScore: Int,
-    val gameStore: GameStore,
-)
+object DealAction {
 
-fun Deal.toItem(gameStore: GameStore) =
-    DealItem(id, title, salePrice, normalPrice, discountPercentage, thumbUrl, metacriticScore, gameStore)
-
-val AppState.deals: ListLoadState<PageRequest<Unit>, DealItem>
-    get() = listLoadState(
-        dealIds.lastRequest,
-        dealIds.data
-            .mapNotNull(entities.deals::get)
-            .mapNotNull {
-                val store = entities.gameStores[it.gameStoreId] ?: return@mapNotNull null
-                it.toItem(store)
-            },
-        dealIds.isLoading,
-        dealIds.error,
-        dealIds.hasMore
-    )
-
-val DealsSelector = createSelector(
-    stateEquality = SelectorEquality.by(AppState::dealIds),
-    selector = AppState::deals,
-)
-
-sealed interface DealAction : Action {
-
-    object LoadMore : DealAction, CoThunk<AppState>(scope@{
+    object LoadMore : CoThunk<AppState>(scope@{
         if (currentState.dealIds.isLoading) return@scope
         val request = currentState.dealIds.lastRequest
         val error = currentState.dealIds.error
@@ -60,8 +26,8 @@ sealed interface DealAction : Action {
         joinDispatchJob(DataSourceCall(DataSources.AllDeals, newRequest))
     })
 
-    companion object {
-        fun GoToDetails(id: Deal.Id) = NavigationAction.Push(Destination(DestinationType.DealDetails(id)))
+    fun GoToDetails(id: Deal.Id): Action {
+        return NavigationAction.Push(Destination(DestinationType.DealDetails(id)))
     }
 }
 
@@ -86,7 +52,7 @@ internal val dealsIdsReducer: Reducer<ListLoadState<PageRequest<Unit>, Deal.Id>>
         },
         onFailure = { state, (_, error) ->
             state.mutate {
-                this.error = error
+                this.error = if (error is CancellationException) null else error
                 isLoading = false
                 hasMore = true
             }

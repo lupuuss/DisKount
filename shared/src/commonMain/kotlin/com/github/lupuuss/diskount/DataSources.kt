@@ -1,12 +1,11 @@
 package com.github.lupuuss.diskount
 
-import dev.redukt.data.DataSource
-import dev.redukt.data.DataSourceKey
 import com.github.lupuuss.diskount.domain.Deal
 import com.github.lupuuss.diskount.domain.GameStore
 import com.github.lupuuss.diskount.paging.PageRequest
+import dev.redukt.data.DataSourceKey
 
 object DataSources {
-    object AllDeals : DataSourceKey<DataSource<PageRequest<Unit>, List<Deal>>>
-    object GameStores : DataSourceKey<DataSource<Unit, List<GameStore>>>
+    object AllDeals : DataSourceKey<PageRequest<Unit>, List<Deal>>
+    object GameStores : DataSourceKey<Unit, List<GameStore>>
 }
