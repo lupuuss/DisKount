@@ -8,6 +8,13 @@ version = "1.0"
 
 val ktorVersion = "2.1.3"
 
+android {
+    compileSdk = 33
+    defaultConfig {
+        minSdk = 21
+    }
+}
+
 kotlin {
     android()
     js(IR) { browser() }
@@ -24,7 +31,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-
             }
         }
         val commonTest by getting {
@@ -37,14 +43,6 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
-    }
-}
 
-android {
-    compileSdk = 32
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 32
     }
 }

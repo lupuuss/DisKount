@@ -9,6 +9,7 @@ import dev.redukt.core.Action
 import dev.redukt.core.coroutines.DispatchCoroutineScope
 import dev.redukt.core.middleware.translucentMiddleware
 import dev.redukt.core.store.buildStore
+import dev.redukt.core.threading.threadGuardMiddleware
 import dev.redukt.data.dataSourceMiddleware
 import dev.redukt.koin.KoinApplicationDI
 import dev.redukt.thunk.thunkMiddleware
@@ -43,6 +44,7 @@ internal fun createStore(koinApp: KoinApplication) = buildStore {
     AppState() reducedBy ::appReducer
     middlewares {
         Napier.base(DebugAntilog())
+        +threadGuardMiddleware
         +translucentMiddleware<AppState> { Napier.v(tag = "DisKount", message = it.toString()) }
         +initMiddleware
         +thunkMiddleware
