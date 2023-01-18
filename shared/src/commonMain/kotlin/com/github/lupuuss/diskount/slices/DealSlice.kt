@@ -1,7 +1,9 @@
 package com.github.lupuuss.diskount.slices
 
-import com.github.lupuuss.diskount.*
-import com.github.lupuuss.diskount.domain.Deal
+import com.github.lupuuss.diskount.AppState
+import com.github.lupuuss.diskount.DataSources
+import com.github.lupuuss.diskount.ListLoadState
+import com.github.lupuuss.diskount.mutate
 import com.github.lupuuss.diskount.paging.PageRequest
 import dev.redukt.core.Action
 import dev.redukt.core.Reducer
@@ -10,7 +12,24 @@ import dev.redukt.data.DataSourceCall
 import dev.redukt.data.createDataSourceReducer
 import dev.redukt.thunk.CoThunk
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.delay
+import kotlin.math.roundToInt
+
+data class Deal(
+    val id: Id,
+    val title: String,
+    val salePrice: Double,
+    val normalPrice: Double,
+    val thumbUrl: String,
+    val metacriticScore: Int?,
+    val steamRatingPercent: Int?,
+    val gameStoreId: GameStore.Id,
+) {
+
+    val discountPercentage get() = (((normalPrice - salePrice) / normalPrice) * 100.0).roundToInt()
+
+    @JvmInline
+    value class Id(val value: String)
+}
 
 object DealAction {
 

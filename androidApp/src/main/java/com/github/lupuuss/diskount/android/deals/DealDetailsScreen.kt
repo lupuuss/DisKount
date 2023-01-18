@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.github.lupuuss.diskount.android.LocalStore
-import com.github.lupuuss.diskount.domain.Deal
+import com.github.lupuuss.diskount.slices.Deal
 import com.github.lupuuss.diskount.slices.NavigationAction
 import com.github.lupuuss.diskount.view.DealItem
 import com.github.lupuuss.diskount.view.DealItemViewSelector

@@ -1,8 +1,8 @@
 package com.github.lupuuss.diskount
 
-import com.github.lupuuss.diskount.domain.Deal
-import com.github.lupuuss.diskount.domain.GameStore
+import com.github.lupuuss.diskount.slices.GameStore
 import com.github.lupuuss.diskount.paging.PageRequest
+import com.github.lupuuss.diskount.slices.Deal
 import dev.redukt.data.DataSourceKey
 
 object DataSources {

@@ -1,7 +1,6 @@
 package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.AppState
-import com.github.lupuuss.diskount.domain.Deal
 import dev.redukt.core.Action
 import dev.redukt.core.store.SelectorEquality
 import dev.redukt.core.store.createSelector

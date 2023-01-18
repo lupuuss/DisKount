@@ -1,6 +1,6 @@
 package com.github.lupuuss.diskount.network.dto
 
-import com.github.lupuuss.diskount.domain.GameStore
+import com.github.lupuuss.diskount.slices.GameStore
 import kotlinx.serialization.Serializable
 
 @Serializable
