@@ -2,7 +2,9 @@ package com.github.lupuuss.diskount
 
 import com.github.lupuuss.diskount.slices.GameStore
 import com.github.lupuuss.diskount.network.ktorDataSourceResolver
+import com.github.lupuuss.diskount.paging.ListLoadState
 import com.github.lupuuss.diskount.paging.PageRequest
+import com.github.lupuuss.diskount.paging.listLoadState
 import com.github.lupuuss.diskount.slices.*
 import dev.redukt.core.Action
 import dev.redukt.core.coroutines.DispatchCoroutineScope

@@ -2,8 +2,8 @@ package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.AppState
 import com.github.lupuuss.diskount.DataSources
-import com.github.lupuuss.diskount.ListLoadState
-import com.github.lupuuss.diskount.mutate
+import com.github.lupuuss.diskount.paging.ListLoadState
+import com.github.lupuuss.diskount.paging.mutate
 import com.github.lupuuss.diskount.paging.PageRequest
 import dev.redukt.core.Action
 import dev.redukt.core.Reducer

@@ -1,8 +1,8 @@
 package com.github.lupuuss.diskount.view
 
 import com.github.lupuuss.diskount.AppState
-import com.github.lupuuss.diskount.ListLoadState
-import com.github.lupuuss.diskount.listLoadState
+import com.github.lupuuss.diskount.paging.ListLoadState
+import com.github.lupuuss.diskount.paging.listLoadState
 import com.github.lupuuss.diskount.paging.PageRequest
 import com.github.lupuuss.diskount.slices.Deal
 import com.github.lupuuss.diskount.slices.GameStore

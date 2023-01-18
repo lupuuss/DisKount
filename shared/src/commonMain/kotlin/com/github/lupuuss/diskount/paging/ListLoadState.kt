@@ -1,4 +1,4 @@
-package com.github.lupuuss.diskount
+package com.github.lupuuss.diskount.paging
 
 interface ListLoadState<out Request, out Data> {
     val lastRequest: Request?
