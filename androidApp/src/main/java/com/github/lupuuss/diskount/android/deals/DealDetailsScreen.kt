@@ -16,16 +16,16 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.github.lupuuss.diskount.android.LocalStore
 import com.github.lupuuss.diskount.domain.Deal
-import com.github.lupuuss.diskount.slices.DealItem
-import com.github.lupuuss.diskount.slices.DealItemSelector
 import com.github.lupuuss.diskount.slices.NavigationAction
+import com.github.lupuuss.diskount.view.DealItem
+import com.github.lupuuss.diskount.view.DealItemViewSelector
 import dev.redukt.compose.dispatch
 import dev.redukt.compose.selectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DealDetailsScreen(id: Deal.Id) {
-    val optionalDeal by LocalStore.selectAsState(selector = DealItemSelector(id))
+    val optionalDeal by LocalStore.selectAsState(selector = DealItemViewSelector(id))
     optionalDeal?.let { deal ->
         Column(Modifier.fillMaxSize()) {
             val behavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
@@ -106,7 +106,7 @@ fun ReviewsRow(deal: DealItem, modifier: Modifier = Modifier) {
             )
         }
         OutlinedButton(
-            onClick = {  },
+            onClick = { },
             enabled = deal.steamRatingPercent != null,
         ) {
             ReviewText(

@@ -18,9 +18,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.github.lupuuss.diskount.android.LocalStore
-import com.github.lupuuss.diskount.slices.AllDealItemsSelector
 import com.github.lupuuss.diskount.slices.DealAction
-import com.github.lupuuss.diskount.slices.DealItem
+import com.github.lupuuss.diskount.view.AllDealItemsViewSelector
+import com.github.lupuuss.diskount.view.DealItem
 import dev.redukt.compose.selectAsState
 import dev.redukt.core.coroutines.joinDispatchJob
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.filter
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DealsScreen() = LocalStore.current.run {
-    val deals by selectAsState(selector = AllDealItemsSelector)
+    val deals by selectAsState(selector = AllDealItemsViewSelector)
     val listState = rememberLazyListState()
     LaunchedEffect(Unit) {
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }

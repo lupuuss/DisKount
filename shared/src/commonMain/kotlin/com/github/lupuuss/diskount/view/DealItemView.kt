@@ -1,4 +1,4 @@
-package com.github.lupuuss.diskount.slices
+package com.github.lupuuss.diskount.view
 
 import com.github.lupuuss.diskount.AppState
 import com.github.lupuuss.diskount.ListLoadState
@@ -34,7 +34,7 @@ fun Deal.toItem(gameStore: GameStore) = DealItem(
     gameStore
 )
 
-val AppState.dealItems: ListLoadState<PageRequest<Unit>, DealItem>
+val AppState.dealItemsView: ListLoadState<PageRequest<Unit>, DealItem>
     get() = listLoadState(
         dealIds.lastRequest,
         dealIds.data
@@ -48,12 +48,12 @@ val AppState.dealItems: ListLoadState<PageRequest<Unit>, DealItem>
         dealIds.hasMore
     )
 
-val AllDealItemsSelector = createSelector(
+val AllDealItemsViewSelector = createSelector(
     stateEquality = SelectorEquality.by(AppState::dealIds),
-    selector = AppState::dealItems,
+    selector = AppState::dealItemsView,
 )
 
-fun DealItemSelector(id: Deal.Id): Selector<AppState, DealItem?> = createSelector(
+fun DealItemViewSelector(id: Deal.Id): Selector<AppState, DealItem?> = createSelector(
     stateEquality = SelectorEquality.by { it.entities.deals[id] },
     selector = { state ->
         val deal = state.entities.deals[id] ?: return@createSelector null
