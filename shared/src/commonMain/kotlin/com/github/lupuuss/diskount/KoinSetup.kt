@@ -10,11 +10,12 @@ import io.ktor.http.ContentType.Application.Json
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import org.koin.core.KoinApplication
+import org.koin.core.module.Module
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 
-fun initKoinApp() = koinApplication {
-    modules(mainModule())
+fun initKoinApp(platformModule: Module) = koinApplication {
+    modules(mainModule(), platformModule)
 }
 
 private fun KoinApplication.mainModule() = module {

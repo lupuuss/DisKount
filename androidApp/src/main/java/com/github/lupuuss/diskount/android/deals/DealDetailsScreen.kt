@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.github.lupuuss.diskount.android.LocalStore
 import com.github.lupuuss.diskount.slices.Deal
+import com.github.lupuuss.diskount.slices.DealAction
 import com.github.lupuuss.diskount.slices.NavigationAction
 import com.github.lupuuss.diskount.view.DealItem
 import com.github.lupuuss.diskount.view.DealItemViewSelector
@@ -27,17 +28,19 @@ import dev.redukt.compose.selectAsState
 fun DealDetailsScreen(id: Deal.Id) {
     val optionalDeal by LocalStore.selectAsState(selector = DealItemViewSelector(id))
     optionalDeal?.let { deal ->
-        Column(Modifier.fillMaxSize()) {
-            val behavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-            TopBar(deal, behavior)
-            Details(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-                    .nestedScroll(behavior.nestedScrollConnection)
-                    .verticalScroll(rememberScrollState()),
-                deal = deal,
-            )
+        Surface(color = MaterialTheme.colorScheme.surface) {
+            Column(Modifier.fillMaxSize()) {
+                val behavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+                TopBar(deal, behavior)
+                Details(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                        .nestedScroll(behavior.nestedScrollConnection)
+                        .verticalScroll(rememberScrollState()),
+                    deal = deal,
+                )
+            }
         }
     }
 }
@@ -93,9 +96,10 @@ private fun Details(
 
 @Composable
 fun ReviewsRow(deal: DealItem, modifier: Modifier = Modifier) {
+    val dispatch = LocalStore.dispatch
     Row(modifier = modifier, horizontalArrangement = Arrangement.SpaceAround) {
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = { dispatch(DealAction.RedirectToMetacritic(deal.id)) },
             enabled = deal.metacriticScore != null,
         ) {
             ReviewText(
@@ -106,7 +110,7 @@ fun ReviewsRow(deal: DealItem, modifier: Modifier = Modifier) {
             )
         }
         OutlinedButton(
-            onClick = { },
+            onClick = { dispatch(DealAction.RedirectToSteamApp(deal.id)) },
             enabled = deal.steamRatingPercent != null,
         ) {
             ReviewText(

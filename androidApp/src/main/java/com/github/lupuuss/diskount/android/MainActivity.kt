@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.github.lupuuss.diskount.AppState
+import com.github.lupuuss.diskount.android.redirect.AndroidUrlRedirect
 import com.github.lupuuss.diskount.android.theme.AppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.redukt.compose.localStoreOf
@@ -20,7 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val store = disKountApp.koin.koin.get<Store<AppState>>()
+        val koin = disKountApp.koin.koin
+        val store = koin.get<Store<AppState>>()
+        koin.get<AndroidUrlRedirect>().setContext(this)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             val uiController = rememberSystemUiController()

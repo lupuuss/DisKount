@@ -14,6 +14,8 @@ internal data class DealDto(
     val metacriticScore: String,
     val steamRatingPercent: String,
     val storeID: String,
+    val metacriticLink: String?,
+    val steamAppID: String?
 )
 
 internal fun DealDto.toDomain() = Deal(
@@ -24,5 +26,7 @@ internal fun DealDto.toDomain() = Deal(
     thumbUrl = thumb,
     metacriticScore = metacriticScore.toInt().takeIf { it != 0 },
     steamRatingPercent = steamRatingPercent.toInt().takeIf { it != 0 },
-    gameStoreId = GameStore.Id(storeID)
+    gameStoreId = GameStore.Id(storeID),
+    metacriticUrl = metacriticLink?.let { "https://metacritic.com$it" },
+    steamAppUrl = steamAppID?.let { "https://store.steampowered.com/app/$it" },
 )

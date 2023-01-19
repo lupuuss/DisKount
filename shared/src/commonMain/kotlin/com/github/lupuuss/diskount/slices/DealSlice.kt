@@ -5,12 +5,14 @@ import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.paging.ListLoadState
 import com.github.lupuuss.diskount.paging.mutate
 import com.github.lupuuss.diskount.paging.PageRequest
+import com.github.lupuuss.diskount.redirect.UrlRedirectAction
 import dev.redukt.core.Action
 import dev.redukt.core.Reducer
 import dev.redukt.core.coroutines.joinDispatchJob
 import dev.redukt.data.*
 import dev.redukt.data.DataSourcePayload.Success
 import dev.redukt.thunk.CoThunk
+import dev.redukt.thunk.Thunk
 import kotlinx.coroutines.CancellationException
 import kotlin.math.roundToInt
 
@@ -23,6 +25,8 @@ data class Deal(
     val metacriticScore: Int?,
     val steamRatingPercent: Int?,
     val gameStoreId: GameStore.Id,
+    val metacriticUrl: String?,
+    val steamAppUrl: String?
 ) {
 
     val discountPercentage get() = (((normalPrice - salePrice) / normalPrice) * 100.0).roundToInt()
@@ -33,16 +37,34 @@ data class Deal(
 
 object DealAction {
 
-    object LoadMore : CoThunk<AppState>(scope@{
+    data class LoadMore(val invalidate: Boolean = false) : CoThunk<AppState>(scope@{
         if (currentState.dealIds.isLoading) return@scope
         val request = currentState.dealIds.lastRequest
         val error = currentState.dealIds.error
         val newRequest = when {
-            request == null -> PageRequest(Unit)
+            invalidate || request == null -> PageRequest(Unit)
             error == null -> request.run { copy(pageNumber = pageNumber + 1) }
             else -> request
         }
         joinDispatchJob(DataSourceCall(DataSources.AllDeals, newRequest))
+    })
+
+    data class RedirectToMetacritic(val id: Deal.Id) : Thunk<AppState>({
+        currentState
+            .entities
+            .deals[id]
+            ?.metacriticUrl
+            ?.let(::UrlRedirectAction)
+            ?.let(this::dispatch)
+    })
+
+    data class RedirectToSteamApp(val id: Deal.Id) : Thunk<AppState>({
+        currentState
+            .entities
+            .deals[id]
+            ?.steamAppUrl
+            ?.let(::UrlRedirectAction)
+            ?.let(this::dispatch)
     })
 
     fun GoToDetails(id: Deal.Id): Action {

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,7 +37,7 @@ fun DealsScreen() = LocalStore.current.run {
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
             .distinctUntilChanged()
             .filter { it > deals.data.size - 2 }
-            .collect { joinDispatchJob(DealAction.LoadMore) }
+            .collect { joinDispatchJob(DealAction.LoadMore()) }
     }
     Column {
         val state = rememberTopAppBarState()
@@ -43,6 +45,11 @@ fun DealsScreen() = LocalStore.current.run {
         TopAppBar(
             title = { Text(text = "Discounts", style = MaterialTheme.typography.headlineMedium) },
             scrollBehavior = behavior,
+            actions = {
+                IconButton(onClick = { dispatch(DealAction.LoadMore(true)) }) {
+                    Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
+                }
+            }
         )
         LazyColumn(
             modifier = Modifier.nestedScroll(behavior.nestedScrollConnection),
