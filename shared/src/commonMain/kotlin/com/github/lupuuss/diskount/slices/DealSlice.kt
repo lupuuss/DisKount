@@ -8,8 +8,8 @@ import com.github.lupuuss.diskount.paging.PageRequest
 import dev.redukt.core.Action
 import dev.redukt.core.Reducer
 import dev.redukt.core.coroutines.joinDispatchJob
-import dev.redukt.data.DataSourceCall
-import dev.redukt.data.createDataSourceReducer
+import dev.redukt.data.*
+import dev.redukt.data.DataSourcePayload.Success
 import dev.redukt.thunk.CoThunk
 import kotlinx.coroutines.CancellationException
 import kotlin.math.roundToInt
@@ -78,7 +78,9 @@ internal val dealsIdsReducer: Reducer<ListLoadState<PageRequest<Unit>, Deal.Id>>
         },
     )
 
-internal val dealEntityReducer: Reducer<Map<Deal.Id, Deal>> = createDataSourceReducer(
-    key = DataSources.AllDeals,
-    onSuccess = { deals, payload -> deals + payload.response.associateBy { it.id } }
-)
+internal val dealEntityReducer: Reducer<Map<Deal.Id, Deal>> = { deals, action ->
+    when (val payload = action.asDataSourceAction(DataSources.AllDeals)?.payload) {
+        is Success -> deals + payload.response.associateBy { it.id }
+        else -> deals
+    }
+}
