@@ -21,4 +21,6 @@ fun stubDeal(
     metacriticScore = metacriticScore,
     steamRatingPercent = steamRatingPercent,
     gameStoreId = GameStore.Id(gameStoreId),
+    metacriticUrl = "/metacritic/$id",
+    steamAppUrl = "/steam/$id"
 )

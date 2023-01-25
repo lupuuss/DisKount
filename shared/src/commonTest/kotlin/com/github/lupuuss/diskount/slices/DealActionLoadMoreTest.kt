@@ -23,7 +23,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class DealActionLoadMoreTest {
 
-    private val tester = DealAction.LoadMore.tester(AppState())
+    private val tester = DealAction.LoadMore(invalidate = false).tester(AppState())
 
 
     @Test
@@ -36,7 +36,7 @@ class DealActionLoadMoreTest {
     }
 
     @Test
-    fun shouldDispatchDataSourceCallWithFirstPageWhenLastRequestIsNullAndIsLoadingIsFalse() = runTest {
+    fun shouldDispatchDataSourceCallWithFirstPageWhenLastRequestIsNull() = runTest {
         tester.test {
             currentState = AppState(
                 dealIds = listLoadState(lastRequest = null, isLoading = false)
@@ -62,7 +62,7 @@ class DealActionLoadMoreTest {
     }
 
     @Test
-    fun shouldDispatchDataSourceCallWithTheSameRequestWhenErrorIsNotNullAndLoadingIsFalse() = runTest {
+    fun shouldDispatchDataSourceCallWithTheSameRequestWhenErrorIsNotNull() = runTest {
         tester.test {
             currentState = AppState(
                 dealIds = listLoadState(
@@ -74,6 +74,23 @@ class DealActionLoadMoreTest {
             testExecute()
             assertSingleActionEquals(DataSourceCall(DataSources.AllDeals, PageRequest(Unit, 1)))
         }
+    }
+
+    @Test
+    fun shouldInvalidatePagingStatusWhenInvalidateFlagIsSet() = runTest {
+        val state = AppState(
+            dealIds = listLoadState(
+                data = listOf(Deal.Id("1"), Deal.Id("2")),
+                lastRequest = PageRequest(Unit, 2),
+                isLoading = false,
+            )
+        )
+        DealAction.LoadMore(invalidate = true)
+            .tester(state)
+            .test {
+                testExecute()
+                assertSingleActionEquals(DataSourceCall(DataSources.AllDeals, PageRequest(Unit, 1)))
+            }
     }
 
     @Test
