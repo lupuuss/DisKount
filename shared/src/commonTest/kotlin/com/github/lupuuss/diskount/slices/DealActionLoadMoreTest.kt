@@ -89,7 +89,7 @@ class DealActionLoadMoreTest {
             .tester(state)
             .test {
                 testExecute()
-                assertSingleActionEquals(DataSourceCall(DataSources.AllDeals, PageRequest(Unit, 1)))
+                assertSingleActionEquals(DataSourceCall(DataSources.AllDeals, PageRequest(Unit, 0)))
             }
     }
 

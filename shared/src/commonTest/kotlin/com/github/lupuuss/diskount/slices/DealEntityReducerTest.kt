@@ -2,7 +2,7 @@ package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.paging.PageRequest
-import com.github.lupuuss.diskount.stubDeal
+import com.github.lupuuss.diskount.stubs.stubDeal
 import dev.redukt.data.successAction
 import org.junit.Test
 import kotlin.test.assertEquals

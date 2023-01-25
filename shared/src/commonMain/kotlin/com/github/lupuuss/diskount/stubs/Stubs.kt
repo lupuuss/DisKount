@@ -1,4 +1,4 @@
-package com.github.lupuuss.diskount
+package com.github.lupuuss.diskount.stubs
 
 import com.github.lupuuss.diskount.slices.Deal
 import com.github.lupuuss.diskount.slices.GameStore
@@ -23,4 +23,18 @@ fun stubDeal(
     gameStoreId = GameStore.Id(gameStoreId),
     metacriticUrl = "/metacritic/$id",
     steamAppUrl = "/steam/$id"
+)
+
+fun stubGameStore(
+    id: String = "1",
+    name: String = "Game store $id",
+    logoImageUrl: String = "/logo/gamestore/$id",
+    iconImageUrl: String = "/icon/gamestore/$id",
+    bannerImageUrl: String = "/banner/gamestore/$id",
+) = GameStore(
+    GameStore.Id(id),
+    name = name,
+    logoImageUrl = logoImageUrl,
+    iconImageUrl = iconImageUrl,
+    bannerImageUrl = bannerImageUrl,
 )
