@@ -33,10 +33,11 @@ import kotlinx.coroutines.flow.filter
 fun DealsScreen() = LocalStore.current.run {
     val deals by selectAsState(selector = AllDealItemsViewSelector)
     val listState = rememberLazyListState()
-    LaunchedEffect(Unit) {
+    LaunchedEffect(deals.hasMore) {
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
             .distinctUntilChanged()
             .filter { it > deals.data.size - 2 }
+            .filter { deals.hasMore }
             .collect { joinDispatchJob(DealAction.LoadMore()) }
     }
     Column {

@@ -13,6 +13,7 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
@@ -40,5 +41,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.6.1")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
-
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.3.3")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.3.3")
+    androidTestImplementation("dev.redukt:redukt-test:1.0")
 }
