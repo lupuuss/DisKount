@@ -21,7 +21,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("io.insert-koin:koin-core:3.2.0")
+                api("io.insert-koin:koin-core:3.3.2")
                 api("dev.redukt:redukt-core:1.0")
                 api("dev.redukt:redukt-thunk:1.0")
                 implementation("dev.redukt:redukt-data:1.0")
@@ -36,10 +36,13 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("dev.redukt:redukt-test-thunk:1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
             }
         }
         val androidMain by getting {
             dependencies {
+                api("io.insert-koin:koin-android:3.3.2")
                 implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
