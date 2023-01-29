@@ -3,11 +3,11 @@ package com.github.lupuuss.diskount
 import com.github.lupuuss.diskount.slices.Destination
 import com.github.lupuuss.diskount.slices.DestinationType
 import com.github.lupuuss.diskount.slices.NavigationAction
-import dev.redukt.core.coroutines.coroutineScope
-import dev.redukt.core.middleware.translucentMiddleware
-import dev.redukt.data.DataSourceAction
-import dev.redukt.data.DataSourcePayload
-import dev.redukt.data.callDataSource
+import com.daftmobile.redukt.core.coroutines.coroutineScope
+import com.daftmobile.redukt.core.middleware.translucentMiddleware
+import com.daftmobile.redukt.data.DataSourceAction
+import com.daftmobile.redukt.data.DataSourcePayload
+import com.daftmobile.redukt.data.callDataSource
 import kotlinx.coroutines.launch
 
 internal val initMiddleware = translucentMiddleware<AppState> { action ->

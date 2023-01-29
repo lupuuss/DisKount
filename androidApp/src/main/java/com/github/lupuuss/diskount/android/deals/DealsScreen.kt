@@ -7,10 +7,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -19,12 +16,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.daftmobile.redukt.compose.selectAsState
+import com.daftmobile.redukt.core.coroutines.joinDispatchJob
 import com.github.lupuuss.diskount.android.LocalStore
 import com.github.lupuuss.diskount.slices.DealAction
 import com.github.lupuuss.diskount.view.AllDealItemsViewSelector
 import com.github.lupuuss.diskount.view.DealItem
-import dev.redukt.compose.selectAsState
-import dev.redukt.core.coroutines.joinDispatchJob
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 

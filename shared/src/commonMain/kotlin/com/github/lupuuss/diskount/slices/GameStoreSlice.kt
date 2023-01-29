@@ -1,8 +1,9 @@
 package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.DataSources
-import dev.redukt.core.Reducer
-import dev.redukt.data.createDataSourceReducer
+import com.daftmobile.redukt.core.Reducer
+import com.daftmobile.redukt.data.createDataSourceReducer
+import kotlin.jvm.JvmInline
 
 data class GameStore(
     val id: Id,

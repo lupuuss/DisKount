@@ -6,7 +6,7 @@ import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.github.lupuuss.diskount.AppState
 import com.github.lupuuss.diskount.android.theme.AppTheme
-import dev.redukt.test.tools.TestStore
+import com.daftmobile.redukt.test.tools.TestStore
 import org.junit.Rule
 
 @Suppress("TestFunctionName")

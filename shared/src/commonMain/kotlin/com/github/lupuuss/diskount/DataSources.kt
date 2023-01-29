@@ -3,7 +3,7 @@ package com.github.lupuuss.diskount
 import com.github.lupuuss.diskount.slices.GameStore
 import com.github.lupuuss.diskount.paging.PageRequest
 import com.github.lupuuss.diskount.slices.Deal
-import dev.redukt.data.DataSourceKey
+import com.daftmobile.redukt.data.DataSourceKey
 
 object DataSources {
     object AllDeals : DataSourceKey<PageRequest<Unit>, List<Deal>>

@@ -1,5 +1,5 @@
 package com.github.lupuuss.diskount
 
-import dev.redukt.core.Action
+import com.daftmobile.redukt.core.Action
 
 internal object InitAction : Action

@@ -1,6 +1,6 @@
 package com.github.lupuuss.diskount
 
-import dev.redukt.data.DataSource
+import com.daftmobile.redukt.data.DataSource
 
 class DataSourceMock<Request, Response>(
     private val response: (Request) -> Response

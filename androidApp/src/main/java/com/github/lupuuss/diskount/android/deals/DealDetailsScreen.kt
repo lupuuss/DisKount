@@ -20,8 +20,8 @@ import com.github.lupuuss.diskount.slices.DealAction
 import com.github.lupuuss.diskount.slices.NavigationAction
 import com.github.lupuuss.diskount.view.DealItem
 import com.github.lupuuss.diskount.view.DealItemViewSelector
-import dev.redukt.compose.dispatch
-import dev.redukt.compose.selectAsState
+import com.daftmobile.redukt.compose.dispatch
+import com.daftmobile.redukt.compose.selectAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

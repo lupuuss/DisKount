@@ -16,8 +16,8 @@ import com.github.lupuuss.diskount.slices.Destination
 import com.github.lupuuss.diskount.slices.DestinationType
 import com.github.lupuuss.diskount.slices.NavigationAction
 import com.github.lupuuss.diskount.slices.NavigationSelector
-import dev.redukt.compose.dispatch
-import dev.redukt.compose.selectAsState
+import com.daftmobile.redukt.compose.dispatch
+import com.daftmobile.redukt.compose.selectAsState
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -29,17 +29,6 @@ fun MainScreen() {
         stack = navigation,
         onBackPress = { dispatch(NavigationAction.Pop) },
         destinationId = Destination::id,
-        transitionSpec = { prevStack, currentStack ->
-             when {
-                 (prevStack.orEmpty() - currentStack).singleOrNull() == initialState -> {
-                     slideIntoContainer(End) with slideOutOfContainer(End)
-                 }
-                 (currentStack - prevStack.orEmpty()).singleOrNull() == targetState -> {
-                     slideIntoContainer(Start) with slideOutOfContainer(Start)
-                 }
-                 else -> EnterTransition.None with ExitTransition.None
-             }
-        },
         composableBuilder = {
             when (val type = it.type) {
                 DestinationType.Splash -> SplashScreen()

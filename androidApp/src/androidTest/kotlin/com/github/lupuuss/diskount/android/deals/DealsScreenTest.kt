@@ -10,8 +10,8 @@ import com.github.lupuuss.diskount.paging.listLoadState
 import com.github.lupuuss.diskount.slices.DealAction
 import com.github.lupuuss.diskount.stubs.stubDeal
 import com.github.lupuuss.diskount.stubs.stubGameStore
-import dev.redukt.test.assertions.assertNoActions
-import dev.redukt.test.assertions.assertSingleActionEquals
+import com.daftmobile.redukt.test.assertions.assertNoActions
+import com.daftmobile.redukt.test.assertions.assertSingleActionEquals
 import org.junit.Test
 
 class DealsScreenTest : ComposeTest() {

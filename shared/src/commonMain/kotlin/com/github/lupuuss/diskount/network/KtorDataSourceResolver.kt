@@ -4,8 +4,8 @@ import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.network.dto.DealDto
 import com.github.lupuuss.diskount.network.dto.GameStoreDto
 import com.github.lupuuss.diskount.network.dto.toDomain
-import dev.redukt.data.DataSource
-import dev.redukt.data.resolver.DataSourceResolver
+import com.daftmobile.redukt.data.DataSource
+import com.daftmobile.redukt.data.resolver.DataSourceResolver
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*

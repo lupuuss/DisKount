@@ -12,8 +12,8 @@ import com.github.lupuuss.diskount.AppState
 import com.github.lupuuss.diskount.android.redirect.AndroidUrlRedirect
 import com.github.lupuuss.diskount.android.theme.AppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.redukt.compose.localStoreOf
-import dev.redukt.core.store.Store
+import com.daftmobile.redukt.compose.localStoreOf
+import com.daftmobile.redukt.core.store.Store
 
 val LocalStore = localStoreOf<AppState>()
 

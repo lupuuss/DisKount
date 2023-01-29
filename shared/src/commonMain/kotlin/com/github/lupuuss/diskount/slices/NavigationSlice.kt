@@ -1,9 +1,9 @@
 package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.AppState
-import dev.redukt.core.Action
-import dev.redukt.core.store.SelectorEquality
-import dev.redukt.core.store.createSelector
+import com.daftmobile.redukt.core.Action
+import com.daftmobile.redukt.core.store.select.SelectorEquality
+import com.daftmobile.redukt.core.store.select.createSelector
 import kotlin.random.Random
 import kotlin.random.nextUInt
 
