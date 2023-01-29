@@ -10,6 +10,8 @@ import com.daftmobile.redukt.core.Action
 import com.daftmobile.redukt.core.coroutines.DispatchCoroutineScope
 import com.daftmobile.redukt.core.middleware.translucentMiddleware
 import com.daftmobile.redukt.core.store.buildStore
+import com.daftmobile.redukt.core.store.select.SelectStateCache
+import com.daftmobile.redukt.core.store.select.SelectStateFlowProvider
 import com.daftmobile.redukt.core.threading.threadGuardMiddleware
 import com.daftmobile.redukt.data.dataSourceMiddleware
 import com.daftmobile.redukt.koin.KoinApplicationDI
@@ -55,5 +57,6 @@ internal fun createStore(koinApp: KoinApplication) = buildStore {
         +KoinApplicationDI(koinApp)
         +DispatchCoroutineScope(CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate))
         +ktorDataSourceResolver(koinApp.koin.get())
+        +SelectStateFlowProvider(SelectStateCache.WhileSubscribed())
     }
 }.also { it.dispatch(InitAction) }

@@ -53,11 +53,11 @@ val AllDealItemsViewSelector = createSelector(
     selector = AppState::dealItemsView,
 )
 
-data class DealItemViewSelector(val id: Deal.Id): Selector<AppState, DealItem?> by createSelector(
-    stateEquality = SelectorEquality.by { it.entities.deals[id] },
-    selector = { state ->
-        val deal = state.entities.deals[id] ?: return@createSelector null
-        val store = state.entities.gameStores[deal.gameStoreId] ?: return@createSelector null
-        deal.toItem(store)
+data class DealItemViewSelector(val id: Deal.Id): Selector<AppState, DealItem?> {
+    override fun isStateEqual(old: AppState, new: AppState): Boolean = old.entities.deals[id] == new.entities.deals[id]
+    override fun select(state: AppState): DealItem? {
+        val deal = state.entities.deals[id] ?: return null
+        val store = state.entities.gameStores[deal.gameStoreId] ?: return null
+        return deal.toItem(store)
     }
-)
+}
