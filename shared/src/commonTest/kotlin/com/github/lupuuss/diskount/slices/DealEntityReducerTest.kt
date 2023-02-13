@@ -4,7 +4,7 @@ import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.paging.PageRequest
 import com.github.lupuuss.diskount.stubs.stubDeal
 import com.daftmobile.redukt.data.successAction
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DealEntityReducerTest {

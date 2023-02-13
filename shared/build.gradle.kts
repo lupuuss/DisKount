@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization")
+    kotlin("native.cocoapods")
     id("com.android.library")
 }
 
@@ -16,6 +17,20 @@ android {
 kotlin {
     android()
     js(IR) { browser() }
+    ios()
+    iosSimulatorArm64()
+
+    cocoapods {
+        summary = "Shared module for DisKount app!"
+        homepage = "None!"
+        version = "1.0"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
+            baseName = "Shared"
+        }
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {

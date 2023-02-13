@@ -1,0 +1,9 @@
+name: DisKount
+options:
+  bundleIdPrefix: com.github.lupuuss
+targets:
+  DisKount:
+    type: application
+    platform: iOS
+    deploymentTarget: 14.1
+    sources: [DisKount]
