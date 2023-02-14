@@ -17,15 +17,15 @@ val NavigationSelector = createSelector(
     selector = AppState::navigation
 )
 
-sealed interface DestinationType {
+sealed class DestinationType {
 
-    object Splash : DestinationType
+    object Splash : DestinationType()
 
-    object SplashError : DestinationType
+    object SplashError : DestinationType()
 
-    object AllDeals : DestinationType
+    object AllDeals : DestinationType()
 
-    data class DealDetails(val id: Deal.Id): DestinationType
+    data class DealDetails(val id: Deal.Id): DestinationType()
 }
 
 sealed interface NavigationAction : Action {
