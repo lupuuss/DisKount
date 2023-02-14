@@ -61,6 +61,14 @@ kotlin {
                 implementation("io.ktor:ktor-client-okhttp")
             }
         }
-
+        val iosMain by getting {
+            dependencies {
+                implementation("com.daftmobile.redukt:redukt-swift:1.0")
+                implementation("io.ktor:ktor-client-darwin")
+            }
+        }
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosMain)
+        }
     }
 }

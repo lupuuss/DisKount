@@ -1,11 +1,11 @@
 package com.github.lupuuss.diskount.network
 
+import com.daftmobile.redukt.data.DataSource
+import com.daftmobile.redukt.data.resolver.DataSourceResolver
 import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.network.dto.DealDto
 import com.github.lupuuss.diskount.network.dto.GameStoreDto
 import com.github.lupuuss.diskount.network.dto.toDomain
-import com.daftmobile.redukt.data.DataSource
-import com.daftmobile.redukt.data.resolver.DataSourceResolver
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -33,7 +33,7 @@ internal fun ktorDataSourceResolver(
     }
 }
 
-inline fun <Request, Response> HttpClient.dataSource(
+internal inline fun <Request, Response> HttpClient.dataSource(
     crossinline requestBuilder: HttpRequestBuilder.(Request) -> Unit,
     crossinline responseMapping: suspend (HttpResponse) -> Response
 ) = object : DataSource<Request, Response> {
