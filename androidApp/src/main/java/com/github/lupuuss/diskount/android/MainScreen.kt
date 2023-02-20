@@ -1,6 +1,7 @@
 package com.github.lupuuss.diskount.android
 
-import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +25,7 @@ fun MainScreen() {
         stack = navigation,
         onBackPress = { dispatch(NavigationAction.Pop) },
         destinationId = Destination::id,
+        transitionSpec = AnimatedContentScope<Destination>::configureAnimations,
         composableBuilder = {
             when (val type = it.type) {
                 DestinationType.Splash -> SplashScreen()
@@ -33,4 +35,27 @@ fun MainScreen() {
             }
         }
     )
+}
+
+@OptIn(ExperimentalAnimationApi::class)
+private fun  AnimatedContentScope<Destination>.configureAnimations(
+    prevStack: List<Destination>?,
+    currentStack: List<Destination>
+): ContentTransform {
+    return when {
+        prevStack?.singleOrNull()?.type == DestinationType.Splash -> {
+            fadeIn(animationSpec = tween(1_000)) with fadeOut(animationSpec = tween(1_000))
+        }
+        (prevStack.orEmpty() - currentStack).singleOrNull() == initialState -> {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.End) with slideOutOfContainer(
+                AnimatedContentScope.SlideDirection.End
+            )
+        }
+        (currentStack - prevStack.orEmpty()).singleOrNull() == targetState -> {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Start) with slideOutOfContainer(
+                AnimatedContentScope.SlideDirection.Start
+            )
+        }
+        else -> EnterTransition.None with ExitTransition.None
+    }
 }
