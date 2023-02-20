@@ -1,7 +1,7 @@
 package com.github.lupuuss.diskount.network
 
 import com.daftmobile.redukt.data.DataSource
-import com.daftmobile.redukt.data.resolver.DataSourceResolver
+import com.daftmobile.redukt.data.DataSourceResolver
 import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.network.dto.DealDto
 import com.github.lupuuss.diskount.network.dto.GameStoreDto
