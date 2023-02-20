@@ -9,7 +9,7 @@ import kotlin.random.nextUInt
 
 data class Destination(
     val type: DestinationType,
-    val id: String = getUuid()
+    val id: String = generateIdentifier()
 )
 
 val NavigationSelector = createSelector(
@@ -41,4 +41,4 @@ internal fun navigationReducer(navigation: List<Destination>, action: Action) = 
     else -> navigation
 }
 
-private fun getUuid() = List(4) { Random.nextUInt() }.joinToString(separator = "-") { it.toString(16) }
+private fun generateIdentifier() = List(4) { Random.nextUInt() }.joinToString(separator = "-") { it.toString(16) }
