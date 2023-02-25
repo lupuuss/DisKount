@@ -34,14 +34,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("io.insert-koin:koin-core:3.3.2")
+                api("io.insert-koin:koin-core:3.3.3")
                 api("com.daftmobile.redukt:redukt-core:1.0")
                 api("com.daftmobile.redukt:redukt-thunk:1.0")
-                implementation("com.daftmobile.redukt:redukt-data:1.0")
+                implementation("com.daftmobile.redukt:redukt-data-ktor:1.0")
                 implementation("com.daftmobile.redukt:redukt-koin:1.0")
                 implementation("io.github.aakira:napier:2.6.1")
 
-                api(platform("io.ktor:ktor-bom:2.1.3"))
+                api(platform("io.ktor:ktor-bom:2.2.3"))
                 implementation("io.ktor:ktor-client-core")
                 implementation("io.ktor:ktor-client-logging:")
                 implementation("io.ktor:ktor-client-content-negotiation:")

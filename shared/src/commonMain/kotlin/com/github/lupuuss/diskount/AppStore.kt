@@ -1,7 +1,7 @@
 package com.github.lupuuss.diskount
 
 import com.github.lupuuss.diskount.slices.GameStore
-import com.github.lupuuss.diskount.network.ktorDataSourceResolver
+import com.github.lupuuss.diskount.network.createDataSourceResolver
 import com.github.lupuuss.diskount.paging.ListLoadState
 import com.github.lupuuss.diskount.paging.PageRequest
 import com.github.lupuuss.diskount.paging.listLoadState
@@ -56,7 +56,7 @@ internal fun createStore(koinApp: KoinApplication) = buildStore {
     closure {
         +KoinApplicationDI(koinApp)
         +DispatchCoroutineScope(CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate))
-        +ktorDataSourceResolver(koinApp.koin.get())
+        +createDataSourceResolver(koinApp.koin.get())
         +SelectStateFlowProvider(SelectStateCache.WhileSubscribed())
     }
 }.also { it.dispatch(InitAction) }
