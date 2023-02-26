@@ -7,7 +7,7 @@ import com.daftmobile.redukt.core.coroutines.DispatchCoroutineScope
 import com.daftmobile.redukt.data.DataSource
 import com.daftmobile.redukt.data.DataSourceAction
 import com.daftmobile.redukt.data.DataSourcePayload
-import com.daftmobile.redukt.data.resolver.DataSourceResolver
+import com.daftmobile.redukt.data.DataSourceResolver
 import com.daftmobile.redukt.test.assertions.assertActionEquals
 import com.daftmobile.redukt.test.assertions.assertActionOfType
 import com.daftmobile.redukt.test.assertions.assertSingleActionOfType
@@ -23,8 +23,7 @@ import kotlin.test.assertEquals
 @OptIn(ExperimentalCoroutinesApi::class)
 class InitMiddlewareTest {
 
-    private var gameStoresDataSource: DataSource<Unit, List<GameStore>> =
-        DataSourceMock { emptyList() }
+    private var gameStoresDataSource: DataSource<Unit, List<GameStore>> = DataSource { emptyList() }
     private val resolver = DataSourceResolver {
         DataSources.GameStores resolveBy { gameStoresDataSource }
     }
@@ -59,7 +58,7 @@ class InitMiddlewareTest {
 
     @Test
     fun shouldDispatchNavigationToSplashError() = runTest {
-        gameStoresDataSource = DataSourceMock { error("") }
+        gameStoresDataSource = DataSource { error("") }
         tester.test(closure = DispatchCoroutineScope(this)) {
             testAction(InitAction)
             runCurrent()
