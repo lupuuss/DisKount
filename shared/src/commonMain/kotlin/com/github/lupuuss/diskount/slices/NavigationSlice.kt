@@ -2,8 +2,8 @@ package com.github.lupuuss.diskount.slices
 
 import com.github.lupuuss.diskount.AppState
 import com.daftmobile.redukt.core.Action
+import com.daftmobile.redukt.core.store.select.Selector
 import com.daftmobile.redukt.core.store.select.SelectorEquality
-import com.daftmobile.redukt.core.store.select.createSelector
 import kotlin.random.Random
 import kotlin.random.nextUInt
 
@@ -12,7 +12,7 @@ data class Destination(
     val id: String = generateIdentifier()
 )
 
-val NavigationSelector = createSelector(
+val NavigationSelector = Selector(
     stateEquality = SelectorEquality.by(AppState::navigation),
     selector = AppState::navigation
 )

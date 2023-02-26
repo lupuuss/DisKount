@@ -8,7 +8,6 @@ import com.github.lupuuss.diskount.slices.Deal
 import com.github.lupuuss.diskount.slices.GameStore
 import com.daftmobile.redukt.core.store.select.Selector
 import com.daftmobile.redukt.core.store.select.SelectorEquality
-import com.daftmobile.redukt.core.store.select.createSelector
 
 data class DealItem(
     val id: Deal.Id,
@@ -48,7 +47,7 @@ val AppState.dealItemsView: ListLoadState<PageRequest<Unit>, DealItem>
         hasMore = dealIds.hasMore
     )
 
-val AllDealItemsViewSelector = createSelector(
+val AllDealItemsViewSelector = Selector(
     stateEquality = SelectorEquality.by(AppState::dealIds),
     selector = AppState::dealItemsView,
 )
