@@ -1,19 +1,19 @@
 package com.github.lupuuss.diskount.paging
 
-interface ListLoadState<out Request, out Data> {
-    val lastRequest: Request?
-    val data: List<Data>
-    val isLoading: Boolean
-    val error: Throwable?
-    val hasMore: Boolean
+abstract class ListLoadState<out Request, out Data> {
+    abstract val lastRequest: Request?
+    abstract val data: List<Data>
+    abstract val isLoading: Boolean
+    abstract val error: Throwable?
+    abstract val hasMore: Boolean
 }
 
-interface MutableListLoadState<Request, Data> : ListLoadState<Request, Data> {
-    override var lastRequest: Request?
-    override val data: MutableList<Data>
-    override var isLoading: Boolean
-    override var error: Throwable?
-    override var hasMore: Boolean
+abstract class MutableListLoadState<Request, Data> : ListLoadState<Request, Data>() {
+    abstract override var lastRequest: Request?
+    abstract override val data: MutableList<Data>
+    abstract override var isLoading: Boolean
+    abstract override var error: Throwable?
+    abstract override var hasMore: Boolean
 }
 
 fun <Request, Data> listLoadState(
@@ -44,4 +44,4 @@ private data class ListLoadStateImpl<Request, Data>(
     override var isLoading: Boolean = false,
     override var error: Throwable? = null,
     override var hasMore: Boolean = true,
-) : MutableListLoadState<Request, Data>
+) : MutableListLoadState<Request, Data>()
