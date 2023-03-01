@@ -1,4 +1,8 @@
 name: DisKount
+packages:
+  Kingfisher:
+    url: https://github.com/onevcat/Kingfisher.git
+    from: 7.3.2
 options:
   bundleIdPrefix: com.github.lupuuss
 targets:
@@ -7,3 +11,5 @@ targets:
     platform: iOS
     deploymentTarget: 14.1
     sources: [DisKount]
+    dependencies:
+      - package: Kingfisher

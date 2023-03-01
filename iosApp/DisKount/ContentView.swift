@@ -9,7 +9,12 @@ struct ContentView: View {
     
     var body: some View {
         ObserveOn(store.subscribeNavigation(onChange:)) { navigation in
-            Text(navigation.description)
+            switch navigation.last?.type {
+            case is DestinationType.Splash: SplashView()
+            case is DestinationType.AllDeals: DealsView()
+            case let details as DestinationType.DealDetails: DealDetailsView(id: details.id)
+            default: EmptyView()
+            }
         }
     }
 }

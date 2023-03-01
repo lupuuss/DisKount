@@ -1,20 +1,20 @@
 package com.github.lupuuss.diskount.slices
 
+import com.daftmobile.redukt.core.Reducer
+import com.daftmobile.redukt.core.coroutines.joinDispatchJob
+import com.daftmobile.redukt.data.DataSourceCall
+import com.daftmobile.redukt.data.DataSourcePayload.Success
+import com.daftmobile.redukt.data.asDataSourceAction
+import com.daftmobile.redukt.data.createDataSourceReducer
+import com.daftmobile.redukt.thunk.CoThunk
+import com.daftmobile.redukt.thunk.Thunk
 import com.github.lupuuss.diskount.AppState
 import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.paging.ListLoadState
-import com.github.lupuuss.diskount.paging.mutate
 import com.github.lupuuss.diskount.paging.PageRequest
+import com.github.lupuuss.diskount.paging.mutate
 import com.github.lupuuss.diskount.redirect.UrlRedirectAction
-import com.daftmobile.redukt.core.Action
-import com.daftmobile.redukt.core.Reducer
-import com.daftmobile.redukt.core.coroutines.joinDispatchJob
-import com.daftmobile.redukt.data.*
-import com.daftmobile.redukt.data.DataSourcePayload.Success
-import com.daftmobile.redukt.thunk.CoThunk
-import com.daftmobile.redukt.thunk.Thunk
 import kotlinx.coroutines.CancellationException
-import kotlin.jvm.JvmInline
 import kotlin.math.roundToInt
 
 data class Deal(
@@ -32,8 +32,7 @@ data class Deal(
 
     val discountPercentage get() = (((normalPrice - salePrice) / normalPrice) * 100.0).roundToInt()
 
-    @JvmInline
-    value class Id(val value: String)
+    data class Id(val value: String)
 }
 
 object DealAction {
@@ -68,9 +67,9 @@ object DealAction {
             ?.let(this::dispatch)
     })
 
-    fun GoToDetails(id: Deal.Id): Action {
-        return NavigationAction.Push(Destination(DestinationType.DealDetails(id)))
-    }
+    data class GoToDetails(val id: Deal.Id): Thunk<AppState>({
+        dispatch(NavigationAction.Push(Destination(DestinationType.DealDetails(id))))
+    })
 }
 
 internal val dealsIdsReducer: Reducer<ListLoadState<PageRequest<Unit>, Deal.Id>> =
