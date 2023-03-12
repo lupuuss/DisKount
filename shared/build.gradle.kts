@@ -35,10 +35,11 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api("io.insert-koin:koin-core:3.3.3")
-                api("com.daftmobile.redukt:redukt-core:1.0")
-                api("com.daftmobile.redukt:redukt-thunk:1.0")
-                implementation("com.daftmobile.redukt:redukt-data-ktor:1.0")
-                implementation("com.daftmobile.redukt:redukt-koin:1.0")
+                api(platform("com.daftmobile.redukt:redukt-bom:1.0"))
+                api("com.daftmobile.redukt:redukt-core")
+                api("com.daftmobile.redukt:redukt-thunk")
+                implementation("com.daftmobile.redukt:redukt-data-ktor")
+                implementation("com.daftmobile.redukt:redukt-koin")
                 implementation("io.github.aakira:napier:2.6.1")
 
                 api(platform("io.ktor:ktor-bom:2.2.3"))
@@ -51,7 +52,7 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
-                implementation("com.daftmobile.redukt:redukt-test-thunk:1.0")
+                implementation("com.daftmobile.redukt:redukt-test-thunk")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
             }
         }
@@ -63,7 +64,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation("com.daftmobile.redukt:redukt-swift:1.0")
+                implementation("com.daftmobile.redukt:redukt-swift")
                 implementation("io.ktor:ktor-client-darwin")
             }
         }
