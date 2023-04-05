@@ -6,8 +6,8 @@ import com.daftmobile.redukt.data.DataSourceCall
 import com.daftmobile.redukt.data.DataSourcePayload.Success
 import com.daftmobile.redukt.data.asDataSourceAction
 import com.daftmobile.redukt.data.createDataSourceReducer
-import com.daftmobile.redukt.thunk.CoThunk
-import com.daftmobile.redukt.thunk.Thunk
+import com.daftmobile.redukt.thunk.BaseCoThunk
+import com.daftmobile.redukt.thunk.BaseThunk
 import com.github.lupuuss.diskount.AppState
 import com.github.lupuuss.diskount.DataSources
 import com.github.lupuuss.diskount.paging.ListLoadState
@@ -37,7 +37,7 @@ data class Deal(
 
 object DealAction {
 
-    data class LoadMore(val invalidate: Boolean = false) : CoThunk<AppState>(scope@{
+    data class LoadMore(val invalidate: Boolean = false) : BaseCoThunk<AppState>(scope@{
         if (currentState.dealIds.isLoading) return@scope
         val request = currentState.dealIds.lastRequest
         val error = currentState.dealIds.error
@@ -49,7 +49,7 @@ object DealAction {
         joinDispatchJob(DataSourceCall(DataSources.AllDeals, newRequest))
     })
 
-    data class RedirectToMetacritic(val id: Deal.Id) : Thunk<AppState>({
+    data class RedirectToMetacritic(val id: Deal.Id) : BaseThunk<AppState>({
         currentState
             .entities
             .deals[id]
@@ -58,7 +58,7 @@ object DealAction {
             ?.let(this::dispatch)
     })
 
-    data class RedirectToSteamApp(val id: Deal.Id) : Thunk<AppState>({
+    data class RedirectToSteamApp(val id: Deal.Id) : BaseThunk<AppState>({
         currentState
             .entities
             .deals[id]
@@ -67,7 +67,7 @@ object DealAction {
             ?.let(this::dispatch)
     })
 
-    data class GoToDetails(val id: Deal.Id): Thunk<AppState>({
+    data class GoToDetails(val id: Deal.Id): BaseThunk<AppState>({
         dispatch(NavigationAction.Push(Destination(DestinationType.DealDetails(id))))
     })
 }
